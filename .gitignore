@@ -1,15 +1,26 @@
-target
+# Build output
+target/
+
+# IntelliJ IDEA
+.idea/
 *.iml
-*.iws
-*.ipr
+
+# Eclipse
 .project
 .classpath
-.settings
-.metadata
-.svn
-.idea
-.checkstyle
-.distribution
-atlassian-ide-plugin.xml
-.sonar-ide.properties
-*.patch
+.settings/
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor swap/backup files
+*.swp
+*~
+
+# Maven release
+release.properties
+pom.xml.releaseBackup

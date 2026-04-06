@@ -16,30 +16,30 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 package org.os890.cdi.test;
 
 import org.os890.cdi.ServiceOverview;
-import org.apache.openejb.junit.jee.EJBContainerRule;
-import org.apache.openejb.junit.jee.InjectRule;
-import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
+import org.os890.cdi.addon.dynamictestbean.EnableTestBeans;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
-public class ServiceOverviewTest {
-    @ClassRule
-    public static final EJBContainerRule CONTAINER_RULE = new EJBContainerRule();
-
-    @Rule
-    public final InjectRule injectRule = new InjectRule(this, CONTAINER_RULE);
+/**
+ * Tests for {@link ServiceOverview} using the Dynamic CDI Test Bean Addon.
+ */
+@EnableTestBeans
+class ServiceOverviewTest {
 
     @Inject
     private ServiceOverview serviceOverview;
 
+    /**
+     * Verifies that the DeltaSpike configuration lookup resolves the httpPort property.
+     */
     @Test
-    public void configLookup() {
-        Assert.assertEquals("8080", this.serviceOverview.config("httpPort"));
+    void configLookup() {
+        Assertions.assertEquals("8080", this.serviceOverview.config("httpPort"));
     }
 }

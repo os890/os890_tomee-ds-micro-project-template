@@ -16,16 +16,23 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 package org.os890.cdi;
 
 import org.apache.deltaspike.core.api.config.ConfigProperty;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.Initialized;
-import javax.enterprise.event.Observes;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Initialized;
+import jakarta.enterprise.event.Observes;
+import jakarta.inject.Inject;
 import java.util.logging.Logger;
 
+/**
+ * Logs service metadata at application startup.
+ *
+ * <p>Observes the {@link Initialized} event for {@link ApplicationScoped}
+ * and prints the service name, version, and URL to the JUL logger.</p>
+ */
 public class StartupLogger {
     private static final Logger LOG = Logger.getLogger(StartupLogger.class.getName());
 
@@ -45,6 +52,11 @@ public class StartupLogger {
     @ConfigProperty(name = "httpPort")
     private Integer httpPort;
 
+    /**
+     * Called when the application scope is initialized.
+     *
+     * @param startupEvent the CDI lifecycle event
+     */
     public void onStartup(@Observes @Initialized(ApplicationScoped.class) Object startupEvent) {
         LOG.info("service '" + serviceName + "' started in version " + this.serviceVersion + "");
         LOG.info("info-page at http://localhost:" + httpPort + "/" + this.serviceRoot + "");

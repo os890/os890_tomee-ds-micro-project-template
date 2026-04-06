@@ -16,6 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 package org.os890.cdi.dev;
 
 import org.apache.deltaspike.core.api.config.ConfigResolver;
@@ -25,17 +26,26 @@ import org.apache.tomee.embedded.Container;
 import java.io.File;
 
 /**
- * starter to support hot-reload of resources and jsf-pages during development.
- * tested with intellij
+ * Starter to support hot-reload of resources and JSF pages during development.
+ *
+ * <p>Tested with IntelliJ IDEA.</p>
  */
 public class DevStarter {
+
+    /**
+     * Boots the embedded TomEE container using DeltaSpike configuration.
+     *
+     * @param args command-line arguments (not used)
+     */
     public static void main(String[] args) {
         System.setProperty("faces.PROJECT_STAGE", "Development");
 
         String context = ConfigResolver.getProjectStageAwarePropertyValue("serviceRoot");
         Integer httpPort = Integer.parseInt(ConfigResolver.getProjectStageAwarePropertyValue("httpPort"));
 
-        try (final Container container = new Container(new Configuration().http(httpPort)).deployClasspathAsWebApp(context, new File("src/main/webapp"))) {
+        try (Container container = new Container(
+                new Configuration().http(httpPort))
+                .deployClasspathAsWebApp(context, new File("src/main/webapp"))) {
             container.await();
         }
     }

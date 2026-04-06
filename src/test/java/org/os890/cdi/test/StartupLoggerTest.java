@@ -17,30 +17,29 @@
  * under the License.
  */
 
-package org.os890.cdi;
+package org.os890.cdi.test;
 
-import org.apache.deltaspike.core.api.config.ConfigResolver;
+import org.os890.cdi.StartupLogger;
+import org.os890.cdi.addon.dynamictestbean.EnableTestBeans;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Named;
+import jakarta.inject.Inject;
 
 /**
- * CDI bean that exposes DeltaSpike configuration values.
- *
- * <p>Registered as a named bean so that configuration entries can be
- * accessed from JSF pages via EL expressions.</p>
+ * Tests for {@link StartupLogger} using the Dynamic CDI Test Bean Addon.
  */
-@Named
-@ApplicationScoped
-public class ServiceOverview {
+@EnableTestBeans
+class StartupLoggerTest {
+
+    @Inject
+    private StartupLogger startupLogger;
 
     /**
-     * Looks up a DeltaSpike configuration property in a project-stage-aware manner.
-     *
-     * @param key the configuration property name
-     * @return the resolved value, or {@code "???<key>???"} if not found
+     * Verifies that the {@link StartupLogger} bean is injectable via CDI.
      */
-    public String config(String key) {
-        return ConfigResolver.getProjectStageAwarePropertyValue(key, "???" + key + "???");
+    @Test
+    void startupLoggerIsInjectable() {
+        Assertions.assertNotNull(this.startupLogger);
     }
 }
